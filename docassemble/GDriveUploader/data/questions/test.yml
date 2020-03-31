@@ -1,0 +1,37 @@
+modules:
+  - .uploads
+---
+metadata:
+  title: Default playground interview
+  short title: Test
+  comment: This is a learning tool.  Feel free to write over it.
+---
+include:
+  - basic-questions.yml
+---
+question: |
+  Here is your document, ${ client }.
+attachments:
+  - name: Information Sheet
+    filename: info_sheet
+    variable name: uploaded_file
+    content: |
+      Your name is ${ client }.
+
+      % if user.age_in_years() > 60:
+      You are a senior.
+      % endif
+      You are eligible for ${ benefits }.
+---
+question: |
+  ${ uploaded_file.path() }
+field: saw_uploaded_url
+---
+mandatory: True
+code: |
+  if user.age_in_years() < 18:
+    benefits = "CHIP"
+  else:
+    benefits = "Medicaid"
+  new_entry("People", "1FNnRwPcYmju5z12Vbj4LiZ9tgUixTET6", str(client.name), "Test Document", "Test Document Type", "Test Document Id", uploaded_file)
+  saw_uploaded_url
